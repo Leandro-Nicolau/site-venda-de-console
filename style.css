@@ -117,10 +117,32 @@ section > div img {
     height: 180px;
     object-fit: contain;
 }
+#menu-toggle {
+    display: none;
+}
 @media (max-width: 768px) {
 
     header img {
         width: 250px;
+    }
+
+    #menu-toggle {
+        display: block;
+        margin: 15px auto;
+        background-color: #00aaff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    nav {
+        display: none;
+    }
+
+    nav.menu-aberto {
+        display: block;
     }
 
     nav a {
@@ -151,7 +173,7 @@ section > div img {
         max-width: 100%;
         height: 180px;
     }
-    
+
     .detalhes-produto img {
         width: 350px;
     }
@@ -159,11 +181,91 @@ section > div img {
     footer {
         padding: 25px 10px;
     }
-    
+    #catalogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    max-width: none;
+}
+
+#catalogo > div {
+    display: block;
+    width: auto;
+    max-width: 300px;
+    margin: 20px auto;
+}
 }
 iframe {
     width: 100%;
     max-width: 600px;
     height: 450px;
     border: 0;
+}
+
+#catalogo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+#catalogo > div {
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    margin: 15px;
+    padding: 20px;
+    background-color: #181818;
+    border: 1px solid #00aaff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#catalogo > div:hover {
+    transform: translateY(-8px);
+}
+
+#catalogo > div img {
+    width: 200px;
+    height: 180px;
+    object-fit: contain;
+}
+#lista-carrinho {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+#lista-carrinho > div {
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    margin: 15px;
+    padding: 20px;
+    background-color: #181818;
+    border: 1px solid #00aaff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#lista-carrinho > div:hover {
+    transform: translateY(-8px);
+}
+
+#lista-carrinho > div img {
+    width: 200px;
+    height: 180px;
+    object-fit: contain;
 }
