@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bd_site_vendas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bd_site_vendas`;
 -- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bd_site_vendas
@@ -29,8 +31,18 @@ CREATE TABLE `clientes` (
   `telefone` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`cod_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clientes`
+--
+
+LOCK TABLES `clientes` WRITE;
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'Leandro Nicolau','11111111112','11111111111','leandronicolau82@gmail.com');
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `detalhes`
@@ -52,6 +64,16 @@ CREATE TABLE `detalhes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `detalhes`
+--
+
+LOCK TABLES `detalhes` WRITE;
+/*!40000 ALTER TABLE `detalhes` DISABLE KEYS */;
+INSERT INTO `detalhes` VALUES (1,1,2,2.00),(2,1,2,2.00);
+/*!40000 ALTER TABLE `detalhes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pedido`
 --
 
@@ -62,11 +84,22 @@ CREATE TABLE `pedido` (
   `cod_pedido` int NOT NULL AUTO_INCREMENT,
   `data` date NOT NULL,
   `cod_cliente` int NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Ativo',
   PRIMARY KEY (`cod_pedido`),
   KEY `fk_pedido_cliente_idx` (`cod_cliente`),
   CONSTRAINT `fk_pedido_cliente` FOREIGN KEY (`cod_cliente`) REFERENCES `clientes` (`cod_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedido`
+--
+
+LOCK TABLES `pedido` WRITE;
+/*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
+INSERT INTO `pedido` VALUES (1,'2026-10-30',1,'Cancelado'),(2,'2026-10-30',1,'Ativo');
+/*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `produto`
@@ -82,8 +115,22 @@ CREATE TABLE `produto` (
   `preco` decimal(10,2) NOT NULL,
   `estoque` int NOT NULL,
   PRIMARY KEY (`cod_produto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `produto`
+--
+
+LOCK TABLES `produto` WRITE;
+/*!40000 ALTER TABLE `produto` DISABLE KEYS */;
+INSERT INTO `produto` VALUES (1,'Banana','fruta',2.00,10);
+/*!40000 ALTER TABLE `produto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'bd_site_vendas'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -94,4 +141,4 @@ CREATE TABLE `produto` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-29 21:13:46
+-- Dump completed on 2026-10-30 19:48:45

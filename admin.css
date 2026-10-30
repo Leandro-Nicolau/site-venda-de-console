@@ -72,8 +72,9 @@ form {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 25px;
+    margin: 25px auto;
     max-width: 550px;
+    width: 100%;
 }
 
 label {
@@ -126,4 +127,60 @@ th {
 
 tr:hover {
     background-color: #293149;
+}
+
+main {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 30px;
+    text-align: center;
+}
+
+form {
+    text-align: left;
+}
+
+
+/* Dashboard */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 750px;
+}
+
+.card-dashboard {
+    background: #20203a;
+    border: 1px solid #6c45b8;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(108, 69, 184, 0.3);
+}
+
+.card-dashboard h3 {
+    color: #b99aff;
+    margin-bottom: 12px;
+}
+
+.card-dashboard p {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Ajuste para celulares */
+
+@media (max-width: 600px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
 }
