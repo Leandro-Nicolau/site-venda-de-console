@@ -1,9 +1,11 @@
 
 <?php
+
 include("conexao.php");
 
 $clientes = $conexao->query("SELECT * FROM clientes");
 $produtos = $conexao->query("SELECT * FROM produto");
+
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +13,7 @@ $produtos = $conexao->query("SELECT * FROM produto");
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Pedidos - NEXPLAY</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
@@ -25,9 +27,11 @@ $produtos = $conexao->query("SELECT * FROM produto");
 
             <?php
             while ($cliente = $clientes->fetch_assoc()) {
-                echo "<option value='" . $cliente["cod_cliente"] . "'>";
-                echo $cliente["nome"];
-                echo "</option>";
+            ?>
+                <option value="<?php echo $cliente["cod_cliente"]; ?>">
+                    <?php echo htmlspecialchars($cliente["nome"]); ?>
+                </option>
+            <?php
             }
             ?>
 
@@ -39,9 +43,15 @@ $produtos = $conexao->query("SELECT * FROM produto");
 
             <?php
             while ($produto = $produtos->fetch_assoc()) {
-                echo "<option value='" . $produto["cod_produto"] . "'>";
-                echo $produto["nome"];
-                echo "</option>";
+            ?>
+                <option value="<?php echo $produto["cod_produto"]; ?>">
+                    <?php
+                    echo htmlspecialchars($produto["nome"]);
+                    echo " - R$ " . number_format($produto["preco"], 2, ",", ".");
+                    echo " (Estoque: " . $produto["estoque"] . ")";
+                    ?>
+                </option>
+            <?php
             }
             ?>
 
@@ -54,5 +64,13 @@ $produtos = $conexao->query("SELECT * FROM produto");
 
     </form>
 
+    <br>
+
+    <a href="admin.php">Voltar para administração</a>
+
 </body>
 </html>
+
+<?php
+$conexao->close();
+?>

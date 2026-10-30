@@ -8,7 +8,7 @@ include("conexao.php");
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Clientes - NEXPLAY</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
