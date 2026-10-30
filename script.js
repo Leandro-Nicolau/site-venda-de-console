@@ -75,6 +75,30 @@ function adicionarAoCarrinho(idProduto) {
 
     atualizarContador();
 
+    const formularioCompra = document.getElementById("form-compra");
+
+if (formularioCompra) {
+
+    formularioCompra.addEventListener("submit", function(event) {
+
+        if (carrinho.length === 0) {
+            event.preventDefault();
+            alert("Seu carrinho está vazio!");
+            return;
+        }
+
+        const carrinhoDados = document.getElementById("carrinho-dados");
+
+        carrinhoDados.value = JSON.stringify(carrinho);
+
+    });
+
+}
+
+    
+
+
+
     alert(produto.nome + " foi adicionado ao carrinho!");
 }
 function atualizarContador() {
