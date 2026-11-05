@@ -269,3 +269,48 @@ iframe {
     height: 180px;
     object-fit: contain;
 }
+
+.item-confirmacao {
+    background-color: #1c1c2b;
+    border: 1px solid #7028e4;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.item-confirmacao h4 {
+    color: #a970ff;
+    margin-bottom: 10px;
+}
+
+.item-confirmacao p {
+    margin: 8px 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #12121c;
+    border-radius: 12px;
+    text-align: center;
+}
+
+main h2 {
+    color: #a970ff;
+}
+
+main a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #7028e4;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+main a:hover {
+    background-color: #8b4be8;
+}

@@ -10,64 +10,21 @@ if (botaoMenu && menu) {
     });
 
 }
-const produtos = [
-    {
-        id: 1,
-        nome: "PlayStation 5",
-        imagem: "ps5.png",
-        preco: 3999.99,
-        detalhes: "detalhes_ps5.html"
-    },
-    {
-        id: 2,
-        nome: "Xbox Series S",
-        imagem: "xbox.png",
-        preco: 3799.99,
-        detalhes: "detalhes_xbox.html"
-    },
-    {
-        id: 3,
-        nome: "Nintendo Switch",
-        imagem: "nintendo.png",
-        preco: 2299.00,
-        detalhes: "detalhes_nintendo.html"
-    }
-];
 
-const catalogo = document.getElementById("catalogo");
 
-if (catalogo) {
 
-    produtos.forEach(function(produto) {
 
-        const card = document.createElement("div");
 
-        card.innerHTML = `
-            <img src="${produto.imagem}" alt="${produto.nome}">
-            <h3>${produto.nome}</h3>
-            <p>R$ ${produto.preco.toFixed(2).replace(".", ",")}</p>
-
-            <a href="${produto.detalhes}">Ver detalhes</a>
-
-            <br><br>
-
-            <button onclick="adicionarAoCarrinho(${produto.id})">
-                Adicionar ao carrinho
-            </button>
-        `;
-
-        catalogo.appendChild(card);
-
-    });
-
-}
 
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-function adicionarAoCarrinho(idProduto) {
+function adicionarAoCarrinho(idProduto, nomeProduto, precoProduto) {
 
-    const produto = produtos.find(function(item) {
-        return item.id === idProduto;
-    });
+    const produto = {
+        id: idProduto,
+        nome: nomeProduto,
+        preco: precoProduto,
+        imagem: ""
+    };
 
     carrinho.push(produto);
 
@@ -75,7 +32,20 @@ function adicionarAoCarrinho(idProduto) {
 
     atualizarContador();
 
-    const formularioCompra = document.getElementById("form-compra");
+    alert(produto.nome + " foi adicionado ao carrinho!");
+}
+function atualizarContador() {
+
+    const contador = document.getElementById("contador-carrinho");
+
+    if (contador) {
+        contador.textContent = carrinho.length;
+    }
+}
+
+atualizarContador();
+
+const formularioCompra = document.getElementById("form-compra");
 
 if (formularioCompra) {
 
@@ -95,23 +65,6 @@ if (formularioCompra) {
 
 }
 
-    
-
-
-
-    alert(produto.nome + " foi adicionado ao carrinho!");
-}
-function atualizarContador() {
-
-    const contador = document.getElementById("contador-carrinho");
-
-    if (contador) {
-        contador.textContent = carrinho.length;
-    }
-}
-
-atualizarContador();
-
 const listaCarrinho = document.getElementById("lista-carrinho");
 
 if (listaCarrinho) {
@@ -121,7 +74,7 @@ if (listaCarrinho) {
         const item = document.createElement("div");
 
         item.innerHTML = `
-            <img src="${produto.imagem}" alt="${produto.nome}">
+            ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}">` : ""}
             <h3>${produto.nome}</h3>
             <p>R$ ${produto.preco.toFixed(2).replace(".", ",")}</p>
             <button onclick="removerDoCarrinho(${indice})">

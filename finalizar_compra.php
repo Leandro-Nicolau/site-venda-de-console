@@ -10,11 +10,6 @@ $email = trim($_POST["email"]);
 
 $carrinho = json_decode($_POST["carrinho"], true);
 
-echo "<pre>";
-var_dump($_POST);
-echo "</pre>";
-exit;
-
 
 // Verifica se os dados foram recebidos
 if (
@@ -84,7 +79,7 @@ try {
                    SET estoque = estoque - ?
                    WHERE cod_produto = ? AND estoque >= ?";
 
-    $sqlPreco = "SELECT preco FROM produto WHERE cod_produto = ?";
+    $sqlPreco = "SELECT nome, preco FROM produto WHERE cod_produto = ?";
 
     $sqlDetalhes = "INSERT INTO detalhes
                     (cod_pedido, cod_produto, quantidade, preco_venda)
@@ -112,6 +107,9 @@ foreach ($carrinho as $item) {
     $quantidades[$id]++;
 }
 
+$itensCompra = [];
+$totalCompra = 0;
+
 // Registra cada produto do carrinho
 foreach ($quantidades as $id => $quantidade) {
 
@@ -131,6 +129,17 @@ foreach ($quantidades as $id => $quantidade) {
 
         $produto = $resultadoPreco->fetch_assoc();
         $preco = $produto["preco"];
+
+        $subtotal = $preco * $quantidade;
+
+$itensCompra[] = [
+    "nome" => $produto["nome"],
+    "quantidade" => $quantidade,
+    "preco" => $preco,
+    "subtotal" => $subtotal
+];
+
+$totalCompra += $subtotal;
 
         // Atualiza o estoque
         $stmtEstoque->bind_param("iii", $quantidade, $id, $quantidade);
@@ -153,10 +162,11 @@ foreach ($quantidades as $id => $quantidade) {
     }
 
     // Confirma a compra
-    $conexao->commit();
+$conexao->commit();
 
-    // Limpa o carrinho do navegador
-    $mensagem = "Compra realizada com sucesso! Pedido Nº " . $cod_pedido;
+$compraRealizada = true;
+
+$mensagem = "Compra realizada com sucesso! Pedido Nº " . $cod_pedido;
 
 } catch (Exception $erro) {
 
@@ -178,11 +188,46 @@ foreach ($quantidades as $id => $quantidade) {
 
     <h1>NEXPLAY</h1>
 
-    <main>
-        <h2><?php echo htmlspecialchars($mensagem); ?></h2>
+    
+<main>
+    <h2><?php echo htmlspecialchars($mensagem); ?></h2>
 
-        <a href="index.html">Voltar para a loja</a>
-    </main>
+    <?php if (isset($compraRealizada) && $compraRealizada): ?>
+
+        <h3>Obrigado pela sua compra, <?php echo htmlspecialchars($nome); ?>!</h3>
+
+        <h3>Resumo do pedido</h3>
+
+        <p>Pedido Nº <?php echo $cod_pedido; ?></p>
+
+        <?php foreach ($itensCompra as $item): ?>
+
+            <div class="item-confirmacao">
+                <h4><?php echo htmlspecialchars($item["nome"]); ?></h4>
+
+                <p>Quantidade: <?php echo $item["quantidade"]; ?></p>
+
+                <p>Preço unitário:
+                    R$ <?php echo number_format($item["preco"], 2, ",", "."); ?>
+                </p>
+
+                <p>Subtotal:
+                    R$ <?php echo number_format($item["subtotal"], 2, ",", "."); ?>
+                </p>
+            </div>
+
+        <?php endforeach; ?>
+
+        <h3>
+            Total da compra:
+            R$ <?php echo number_format($totalCompra, 2, ",", "."); ?>
+        </h3>
+
+    <?php endif; ?>
+
+    <a href="index.html">Voltar para a loja</a>
+</main>
+
 
 </body>
 </html>
@@ -190,3 +235,9 @@ foreach ($quantidades as $id => $quantidade) {
 <?php
 $conexao->close();
 ?>
+
+<?php if (isset($compraRealizada) && $compraRealizada): ?>
+    <script>
+        localStorage.removeItem("carrinho");
+    </script>
+<?php endif; ?>
