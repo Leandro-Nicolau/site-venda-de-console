@@ -1,66 +1,29 @@
 
+
 <?php
+session_start();
+
+include("verificar_login.php");
 include("conexao.php");
 
-// Recebe os dados do formulário
-$nome = trim($_POST["nome"]);
-$CPF = trim($_POST["CPF"]);
-$telefone = trim($_POST["telefone"]);
-$email = trim($_POST["email"]);
+// Identifica o cliente pela sessão
+$cod_cliente = $_SESSION["cod_cliente"];
+$nome = $_SESSION["nome_cliente"];
 
-$carrinho = json_decode($_POST["carrinho"], true);
+// Recebe os dados do carrinho
+$carrinho = json_decode($_POST["carrinho"] ?? "", true);
 
-
-// Verifica se os dados foram recebidos
-if (
-    $nome == "" ||
-    $CPF == "" ||
-    $telefone == "" ||
-    $email == "" ||
-    !is_array($carrinho) ||
-    count($carrinho) == 0
-) {
-    die("Dados inválidos. Volte ao carrinho e tente novamente.");
+// Verifica se o carrinho possui produtos
+if (!is_array($carrinho) || count($carrinho) == 0) {
+    die("Carrinho vazio ou dados inválidos. Volte à loja.");
 }
+
 
 try {
 
     $conexao->begin_transaction();
 
-    // Verifica se o cliente já está cadastrado pelo CPF
-    $sql = "SELECT cod_cliente FROM clientes WHERE CPF = ?";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("s", $CPF);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows > 0) {
-
-        $cliente = $resultado->fetch_assoc();
-        $cod_cliente = $cliente["cod_cliente"];
-
-        // Atualiza os dados do cliente
-        $sql = "UPDATE clientes
-                SET nome = ?, telefone = ?, email = ?
-                WHERE cod_cliente = ?";
-
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("sssi", $nome, $telefone, $email, $cod_cliente);
-        $stmt->execute();
-
-    } else {
-
-        // Cadastra um novo cliente
-        $sql = "INSERT INTO clientes (nome, CPF, telefone, email)
-                VALUES (?, ?, ?, ?)";
-
-        $stmt = $conexao->prepare($sql);
-        $stmt->bind_param("ssss", $nome, $CPF, $telefone, $email);
-        $stmt->execute();
-
-        $cod_cliente = $conexao->insert_id;
-    }
+    
 
     // Cria o pedido
     $data = date("Y-m-d");

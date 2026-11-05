@@ -105,7 +105,7 @@ $faturamento = $resultado->fetch_assoc()["total"] ?? 0;
     <a href="listar_pedidos.php">Listar Pedidos</a>
     <br><br>
 
-    <a href="index.html">Voltar para a loja</a>
+    <a href="index.php">Voltar para a loja</a>
 
 </main>
 

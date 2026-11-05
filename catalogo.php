@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+include("conexao.php");
+
+$sql = "SELECT * FROM produto ORDER BY cod_produto DESC";
+$resultado = $conexao->query($sql);
+?>
 
 <?php
 include("conexao.php");
@@ -26,13 +34,27 @@ $resultado = $conexao->query($sql);
         <button id="menu-toggle">☰</button>
 
         <nav id="menu">
-            <a href="index.html">Início</a>
-            <a href="catalogo.php">Produtos</a>
-            <a href="contato.html">Contato</a>
-            <a href="carrinho.html">
-                Carrinho (<span id="contador-carrinho">0</span>)
-            </a>
-        </nav>
+    <a href="index.php">Início</a>
+    <a href="catalogo.php">Produtos</a>
+    <a href="contato.html">Contato</a>
+    <a href="carrinho.html">
+        Carrinho (<span id="contador-carrinho">0</span>)
+    </a>
+
+    <?php if (isset($_SESSION["cod_cliente"])) { ?>
+
+        <a href="minha_conta.php">Minha Conta</a>
+        <a href="logout.php">Sair</a>
+
+    <?php } else { ?>
+
+        <a href="login.php">Entrar</a>
+        <a href="cadastro_usuario.php">Criar conta</a>
+
+    <?php } ?>
+
+    <a href="admin.php">Área Administrativa</a>
+</nav>
     </header>
 
     <h1>Produtos</h1>
