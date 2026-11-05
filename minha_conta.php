@@ -54,7 +54,7 @@ $pedidos = $stmt->get_result();
         <nav>
             <a href="index.php">Início</a>
             <a href="catalogo.php">Produtos</a>
-            <a href="carrinho.html">Carrinho</a>
+            <a href="carrinho.php">Carrinho</a>
             <a href="logout.php">Sair</a>
         </nav>
     </header>

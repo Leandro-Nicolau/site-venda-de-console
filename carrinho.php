@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,15 +24,29 @@
 
         <nav id="menu">
 
-            <a href="index.php">Início</a>
-            <a href="catalogo.php">Produtos</a>
-            <a href="contato.html">Contato</a>
+    <a href="index.php">Início</a>
+    <a href="catalogo.php">Produtos</a>
+    <a href="contato.php">Contato</a>
 
-            <a href="carrinho.html">
-                Carrinho (<span id="contador-carrinho">0</span>)
-            </a>
+    <a href="carrinho.php">
+        Carrinho (<span id="contador-carrinho">0</span>)
+    </a>
 
-        </nav>
+    <?php if (isset($_SESSION["cod_cliente"])) { ?>
+
+        <a href="minha_conta.php">Minha Conta</a>
+        <a href="logout.php">Sair</a>
+
+    <?php } else { ?>
+
+        <a href="login.php">Entrar</a>
+        <a href="cadastro_usuario.php">Criar conta</a>
+
+    <?php } ?>
+
+    <a href="admin.php">Área Administrativa</a>
+
+</nav>
 
     </header>
 

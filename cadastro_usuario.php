@@ -12,7 +12,7 @@
     <header>
         <img src="logo.png" alt="Logo da NEXPLAY" width="350">
         <nav>
-            <a href="index.html">Início</a>
+            <a href="index.php">Início</a>
             <a href="catalogo.php">Produtos</a>
             <a href="login.php">Login</a>
         </nav>

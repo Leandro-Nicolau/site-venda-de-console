@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXPLAY - Contato</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <img src="logo.png" alt="Logo da NEXPLAY" width="350">
+
+        <button id="menu-toggle">☰</button>
+
+        <nav id="menu">
+    <a href="index.php">Início</a>
+    <a href="catalogo.php">Produtos</a>
+    <a href="contato.php">Contato</a>
+    <a href="carrinho.php">
+        Carrinho (<span id="contador-carrinho">0</span>)
+    </a>
+
+    <?php if (isset($_SESSION["cod_cliente"])) { ?>
+
+        <a href="minha_conta.php">Minha Conta</a>
+        <a href="logout.php">Sair</a>
+
+    <?php } else { ?>
+
+        <a href="login.php">Entrar</a>
+        <a href="cadastro_usuario.php">Criar conta</a>
+
+    <?php } ?>
+
+    <a href="admin.php">Área Administrativa</a>
+</nav>
+    </header>
+
+    <h1>Contato</h1>
+
+    <section>
+        <h2>Entre em contato</h2>
+
+        <form id="form-contato">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome">
+
+            <br><br>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+
+            <br><br>
+
+            <label for="mensagem">Mensagem:</label>
+            <br>
+            <textarea id="mensagem" name="mensagem" rows="5" cols="30"></textarea>
+
+            <br><br>
+
+            <button type="submit">Enviar</button>
+            <p id="mensagem-formulario"></p>
+        </form>
+    </section>
+
+    <section>
+        <h2>Informações de contato</h2>
+
+        <p>Endereço: Rua dos Games, 123 - Rio Claro - SP</p>
+        <p>Telefone: (19) 99999-9999</p>
+        <p>E-mail: contato@nexplay.com.br</p>
+    </section>
+
+    <section>
+        <h2>Onde estamos</h2>
+
+        <iframe
+            src="https://www.google.com/maps?q=Rio+Claro,+SP&output=embed">
+        </iframe>
+    </section>
+
+    <footer>
+        <h3>Entre em contato</h3>
+
+        <p>E-mail: contato@nexplay.com.br</p>
+        <p>Telefone: (19) 99999-9999</p>
+
+        <p>Siga a NEXPLAY:</p>
+
+        <a href="https://www.instagram.com/leandrodearaujonic?igsi=MWsyZ2dtb2s0dG9ydw==" target="_blank">
+            Instagram
+        </a>
+
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+
+        <p>&copy; 2026 NEXPLAY - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

@@ -188,7 +188,7 @@ $mensagem = "Compra realizada com sucesso! Pedido Nº " . $cod_pedido;
 
     <?php endif; ?>
 
-    <a href="index.html">Voltar para a loja</a>
+    <a href="index.php">Voltar para a loja</a>
 </main>
 
 

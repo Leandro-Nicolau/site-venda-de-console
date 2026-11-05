@@ -26,9 +26,9 @@ session_start();
 
     <a href="index.php">Início</a>
     <a href="catalogo.php">Produtos</a>
-    <a href="contato.html">Contato</a>
+    <a href="contato.php">Contato</a>
 
-    <a href="carrinho.html">
+    <a href="carrinho.php">
         Carrinho (<span id="contador-carrinho">0</span>)
     </a>
 
