@@ -1,5 +1,5 @@
-
 <?php
+include("verificar_admin.php");
 include("conexao.php");
 
 // Total de clientes
@@ -106,6 +106,9 @@ $faturamento = $resultado->fetch_assoc()["total"] ?? 0;
     <br><br>
 
     <a href="index.php">Voltar para a loja</a>
+
+    <br><br>
+<a href="logout_admin.php">Sair da Área Administrativa</a>
 
 </main>
 

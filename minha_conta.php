@@ -65,6 +65,9 @@ $pedidos = $stmt->get_result();
 
         <h2>Meus dados</h2>
 
+        <a href="editar_meus_dados.php">Editar meus dados</a>
+<br><br>
+
         <p><strong>Nome:</strong>
             <?php echo htmlspecialchars($cliente["nome"]); ?>
         </p>
