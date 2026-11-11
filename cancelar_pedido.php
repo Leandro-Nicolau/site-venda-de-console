@@ -1,16 +1,36 @@
+
 <?php
-include("verificar_admin.php");
-?>
-<?php
+session_start();
 include("conexao.php");
 
-$id = $_GET["id"];
+// Verifica se é administrador ou cliente
+$eh_admin = isset($_SESSION["admin_logado"]) &&
+            $_SESSION["admin_logado"] === true;
+
+$eh_cliente = isset($_SESSION["cod_cliente"]);
+
+if (!$eh_admin && !$eh_cliente) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica o ID do pedido
+if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
+    header("Location: " . ($eh_admin ? "listar_pedidos.php" : "minha_conta.php"));
+    exit;
+}
+
+$id = (int) $_GET["id"];
 
 try {
     $conexao->begin_transaction();
 
-    // Verifica se o pedido existe e está ativo
-    $sql = "SELECT status FROM pedido WHERE cod_pedido = ?";
+    // Busca o pedido e verifica quem é o proprietário
+    $sql = "SELECT status, cod_cliente
+            FROM pedido
+            WHERE cod_pedido = ?
+            FOR UPDATE";
+
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -22,7 +42,14 @@ try {
     }
 
     $pedido = $resultado->fetch_assoc();
+    $stmt->close();
 
+    // Cliente só pode cancelar o próprio pedido
+    if (!$eh_admin && $pedido["cod_cliente"] != $_SESSION["cod_cliente"]) {
+        throw new Exception("Você não tem permissão para cancelar este pedido.");
+    }
+
+    // Verifica se já foi cancelado
     if ($pedido["status"] == "Cancelado") {
         throw new Exception("Este pedido já foi cancelado.");
     }
@@ -37,6 +64,7 @@ try {
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
+    $stmt->close();
 
     // Atualiza o status do pedido
     $sql = "UPDATE pedido
@@ -46,38 +74,45 @@ try {
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
+    $stmt->close();
 
     $conexao->commit();
 
     $mensagem = "Pedido cancelado e estoque atualizado com sucesso!";
 
 } catch (Exception $erro) {
+
     $conexao->rollback();
     $mensagem = $erro->getMessage();
 }
+
+$conexao->close();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cancelar Pedido - NEXPLAY</title>
-    <link rel="stylesheet" href="admin.css">
+
+    <link rel="stylesheet" href="<?php echo $eh_admin ? 'admin.css' : 'style.css'; ?>">
 </head>
+
 <body>
 
-<header>
-    <h1>NEXPLAY</h1>
-    <p>Área Administrativa</p>
-</header>
+    <main>
+        <h1>Cancelamento de Pedido</h1>
 
-<main>
-    <h2>Cancelamento de Pedido</h2>
+        <p><?php echo htmlspecialchars($mensagem); ?></p>
 
-    <p><?php echo htmlspecialchars($mensagem); ?></p>
-
-    <a href="listar_pedidos.php">Voltar para pedidos</a>
-</main>
+        <?php if ($eh_admin) { ?>
+            <a href="listar_pedidos.php">Voltar para pedidos</a>
+        <?php } else { ?>
+            <a href="minha_conta.php">Voltar para minha conta</a>
+        <?php } ?>
+    </main>
 
 </body>
 </html>

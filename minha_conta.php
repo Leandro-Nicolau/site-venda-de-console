@@ -63,26 +63,43 @@ $pedidos = $stmt->get_result();
 
         <h1>Minha Conta</h1>
 
-        <h2>Meus dados</h2>
+        
+<h2>Meus dados</h2>
 
-        <a href="editar_meus_dados.php">Editar meus dados</a>
-<br><br>
+<div class="dados-cliente">
 
-        <p><strong>Nome:</strong>
-            <?php echo htmlspecialchars($cliente["nome"]); ?>
-        </p>
+    <div class="topo-dados">
 
-        <p><strong>CPF:</strong>
-            <?php echo htmlspecialchars($cliente["CPF"]); ?>
-        </p>
+        <h3>Informações pessoais</h3>
 
-        <p><strong>Telefone:</strong>
-            <?php echo htmlspecialchars($cliente["telefone"]); ?>
-        </p>
+        <a href="editar_meus_dados.php" class="botao-editar-dados">
+            Editar meus dados
+        </a>
 
-        <p><strong>E-mail:</strong>
-            <?php echo htmlspecialchars($cliente["email"]); ?>
-        </p>
+    </div>
+
+    <p>
+        <strong>Nome:</strong>
+        <?php echo htmlspecialchars($cliente["nome"]); ?>
+    </p>
+
+    <p>
+        <strong>CPF:</strong>
+        <?php echo htmlspecialchars($cliente["CPF"]); ?>
+    </p>
+
+    <p>
+        <strong>Telefone:</strong>
+        <?php echo htmlspecialchars($cliente["telefone"]); ?>
+    </p>
+
+    <p>
+        <strong>E-mail:</strong>
+        <?php echo htmlspecialchars($cliente["email"]); ?>
+    </p>
+
+</div>
+
 
         <h2>Meus pedidos</h2>
 
@@ -90,27 +107,46 @@ $pedidos = $stmt->get_result();
 
             <?php while ($pedido = $pedidos->fetch_assoc()) { ?>
 
-                <div class="item-confirmacao">
+                
+<div class="pedido-cliente">
 
-                    <h3>Pedido Nº <?php echo $pedido["cod_pedido"]; ?></h3>
+    <h3>Pedido Nº <?php echo $pedido["cod_pedido"]; ?></h3>
 
-                    <p>Data:
-                        <?php echo date("d/m/Y", strtotime($pedido["data"])); ?>
-                    </p>
+    <p>
+        <strong>Data:</strong>
+        <?php echo date("d/m/Y", strtotime($pedido["data"])); ?>
+    </p>
 
-                    <p>Status:
-                        <?php echo htmlspecialchars($pedido["status"]); ?>
-                    </p>
+    <p>
+        <strong>Status:</strong>
+        <?php echo htmlspecialchars($pedido["status"]); ?>
+    </p>
 
-                    <p>Total:
-                        R$ <?php echo number_format($pedido["total"], 2, ",", "."); ?>
-                    </p>
+    <p>
+        <strong>Total:</strong>
+        R$ <?php echo number_format($pedido["total"], 2, ",", "."); ?>
+    </p>
 
-                    <a href="detalhes_pedido.php?id=<?php echo $pedido["cod_pedido"]; ?>">
-                        Ver detalhes
-                    </a>
+    <div class="botoes-pedido">
 
-                </div>
+        <a href="detalhes_pedido.php?id=<?php echo $pedido["cod_pedido"]; ?>">
+            Ver detalhes
+        </a>
+
+        <?php if ($pedido["status"] == "Ativo") { ?>
+
+            <a class="botao-cancelar"
+               href="cancelar_pedido.php?id=<?php echo $pedido["cod_pedido"]; ?>"
+               onclick="return confirm('Tem certeza que deseja cancelar este pedido?');">
+                Cancelar pedido
+            </a>
+
+        <?php } ?>
+
+    </div>
+
+</div>
+
 
             <?php } ?>
 

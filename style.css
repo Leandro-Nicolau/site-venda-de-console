@@ -314,3 +314,96 @@ main a {
 main a:hover {
     background-color: #8b4be8;
 }
+
+
+/* Área de pedidos do cliente */
+.pedido-cliente {
+    background: #1c1b2b;
+    border: 1px solid #7040c5;
+    border-radius: 12px;
+    padding: 22px;
+    margin: 15px auto;
+    max-width: 700px;
+    text-align: left;
+}
+
+.pedido-cliente h3 {
+    color: #a970ff;
+    margin-bottom: 15px;
+}
+
+.pedido-cliente p {
+    margin: 8px 0;
+}
+
+.botoes-pedido {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.botoes-pedido a {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    background: #7040c5;
+    color: white;
+}
+
+.botoes-pedido a:hover {
+    background: #8958df;
+}
+
+.botoes-pedido .botao-cancelar {
+    background: #a83245;
+}
+
+.botoes-pedido .botao-cancelar:hover {
+    background: #c94458;
+}
+
+
+/* Cartão de dados do cliente */
+.dados-cliente {
+    max-width: 700px;
+    margin: 15px auto 35px;
+    padding: 22px;
+    background: #1c1b2b;
+    border: 1px solid #7040c5;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.topo-dados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.topo-dados h3 {
+    color: #a970ff;
+    margin: 0;
+}
+
+.botao-editar-dados {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: #7040c5;
+    color: white;
+    text-decoration: none;
+}
+
+.botao-editar-dados:hover {
+    background: #8958df;
+}
+
+.dados-cliente p {
+    margin: 12px 0;
+}
+
